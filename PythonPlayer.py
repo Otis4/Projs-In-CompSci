@@ -15,11 +15,12 @@ class Window(QMainWindow):
         super().__init__()
         
         # sets parameters of window
+        #why are these variables, they arent even constants
         x = 650
         y = 400
         xpos = 635
         ypos = 340
-        self.setGeometry(xpos, ypos, x, y)
+        self.setGeometry(xpos, ypos, x, y) # just put in the numbers you want
         self.setWindowTitle("Epic Music Player")
         self.setWindowIcon(QIcon('playButton.ico'))
         self.setStyleSheet("background-color: #202020;")
@@ -39,7 +40,7 @@ class Window(QMainWindow):
 
         back = QLabel(self)
         back.setStyleSheet("background-color: #262626;")
-        back.resize(650, 50)
+        back.resize(650, 50)# why not use the variables you created here
         back.move(0, 350)
 
         # creates a button
