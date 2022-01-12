@@ -89,7 +89,7 @@ class Window(QMainWindow):
         dlg = QFileDialog()
         dlg.setFileMode(QFileDialog.AnyFile)
         print()
-        #it spits out ('C:/Users/Ian/OneDrive/Documents/VScode Projects/music.mp3', 'All Files (*)') rather tha just the file name so the media player does not recongnize the file address
+        #it spits out ('C:/Users/Ian/OneDrive/Documents/VScode Projects/music.mp3', 'All Files (*)') rather than just the file name so the media player does not recongnize the file address
         '''
         full_file_path = os.path.join(os.getcwd(), fname)
         url = QUrl.fromLocalFile(full_file_path)
