@@ -1,6 +1,6 @@
 # ui imports
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QLabel, QInputDialog, QFileDialog
 
 # image imports
 from PyQt5.QtGui import QIcon, QPixmap
@@ -10,17 +10,13 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtCore import QUrl
 import sys, os
 
+
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         
         # sets parameters of window
-        #why are these variables, they arent even constants
-        x = 650
-        y = 400
-        xpos = 635
-        ypos = 340
-        self.setGeometry(xpos, ypos, x, y) # just put in the numbers you want
+        self.setFixedSize(1300,750)
         self.setWindowTitle("Epic Music Player")
         self.setWindowIcon(QIcon('playButton.ico'))
         self.setStyleSheet("background-color: #202020;")
@@ -40,10 +36,11 @@ class Window(QMainWindow):
 
         back = QLabel(self)
         back.setStyleSheet("background-color: #262626;")
-        back.resize(650, 50)# why not use the variables you created here
+        back.resize(650, 50)
         back.move(0, 350)
 
-        # creates a button
+
+        # creates a play button
         self.pButton = QPushButton('', self)
         self.pButton.move(280, 360)
         self.pButton.setCheckable(True)
@@ -52,10 +49,19 @@ class Window(QMainWindow):
         self.pButton.setStyleSheet(playStyle)
         self.pButton.setIcon(QIcon('playButton.ico'))
 
+        # creates a file button
+        self.fButton = QPushButton('', self)
+        self.fButton.move(420, 460)
+        self.fButton.setCheckable(True)
+        self.fButton.clicked.connect(self.fButton_clicked)
+        #self.pButton.clicked.connect(self.playAudio)
+        self.fButton.setStyleSheet(fStyle)
+        #self.pButton.setIcon(QIcon('playButton.ico'))
+
         # sets volume -add a slider-
         self.player = QMediaPlayer()
         self.player.setVolume(50)
-        
+
         # shows the window
         self.update()
         self.show()
@@ -74,11 +80,28 @@ class Window(QMainWindow):
             self.pButton.setStyleSheet(playStyle)
             self.pButton.setIcon(QIcon('playButton.ico'))
             self.player.setMuted(True)
+    
+    def fButton_clicked(self): 
 
+
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+         'c:\\',"Audio files (*.mp3 *.wav)")
+        dlg = QFileDialog()
+        dlg.setFileMode(QFileDialog.AnyFile)
+        print()
+        #it spits out ('C:/Users/Ian/OneDrive/Documents/VScode Projects/music.mp3', 'All Files (*)') rather tha just the file name so the media player does not recongnize the file address
+        '''
+        full_file_path = os.path.join(os.getcwd(), fname)
+        url = QUrl.fromLocalFile(full_file_path)
+        content = QMediaContent(url)
+
+        self.player.setMuted(False)
+        self.player.setMedia(content)
+        self.player.play()'''
 
     # audio player
     def playAudio(self):  
-        full_file_path = os.path.join(os.getcwd(), 'Pursuit_of_happiness.mp3')
+        full_file_path = os.path.join(os.getcwd(), 'fname')
         url = QUrl.fromLocalFile(full_file_path)
         content = QMediaContent(url)
 
@@ -88,6 +111,7 @@ class Window(QMainWindow):
 
 
 playStyle = "background-color : green; border: 2px solid black"
+fStyle = "background-color : light-gray; border 2px solid black"
 titleStyle = "font-family: gothom, sans-serif;font-size: 20px; color: white"
 app = QApplication(sys.argv)
 window = Window()
