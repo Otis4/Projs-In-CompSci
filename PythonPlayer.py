@@ -15,6 +15,8 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         
+        self.songname = ""
+
         # sets parameters of window
         self.setFixedSize(1300,750)
         self.setWindowTitle("Epic Music Player")
@@ -36,16 +38,17 @@ class Window(QMainWindow):
 
         back = QLabel(self)
         back.setStyleSheet("background-color: #262626;")
-        back.resize(650, 50)
-        back.move(0, 350)
+        back.resize(1300, 100)
+        back.move(0, 650)
 
 
         # creates a play button
         self.pButton = QPushButton('', self)
-        self.pButton.move(280, 360)
+        self.pButton.move(600, 660)
+        self.pButton.resize(100, 40)
         self.pButton.setCheckable(True)
         self.pButton.clicked.connect(self.pButton_clicked)
-        self.pButton.clicked.connect(self.playAudio)
+        #self.pButton.clicked.connect(self.playAudio)
         self.pButton.setStyleSheet(playStyle)
         self.pButton.setIcon(QIcon('playButton.ico'))
 
@@ -68,18 +71,18 @@ class Window(QMainWindow):
 
     # defines what happens when button is pressed -spaghetti code rn-
     def pButton_clicked(self):
-
+        
         # sets color to red when pressed
         if self.pButton.isChecked():
             self.pButton.setIcon(QIcon('pause.ico'))
             self.pButton.setStyleSheet("background-color : red; border: 2px solid black")
-            self.player.setMuted(False)
+            self.player.play()
         
         # pause button changes color and mutes music
         else:
             self.pButton.setStyleSheet(playStyle)
             self.pButton.setIcon(QIcon('playButton.ico'))
-            self.player.setMuted(True)
+            self.player.pause()
     
     def fButton_clicked(self): 
 
@@ -88,25 +91,12 @@ class Window(QMainWindow):
          'c:\\',"Audio files (*.mp3 *.wav)")
         dlg = QFileDialog()
         dlg.setFileMode(QFileDialog.AnyFile)
-        print()
-        #it spits out ('C:/Users/Ian/OneDrive/Documents/VScode Projects/music.mp3', 'All Files (*)') rather than just the file name so the media player does not recongnize the file address
-        '''
-        full_file_path = os.path.join(os.getcwd(), fname)
+        songname = fname[0]
+        print(songname)
+        full_file_path = os.path.join(os.getcwd(), songname)
         url = QUrl.fromLocalFile(full_file_path)
         content = QMediaContent(url)
-
-        self.player.setMuted(False)
         self.player.setMedia(content)
-        self.player.play()'''
-
-    # audio player
-    def playAudio(self):  
-        full_file_path = os.path.join(os.getcwd(), 'fname')
-        url = QUrl.fromLocalFile(full_file_path)
-        content = QMediaContent(url)
-
-        self.player.setMedia(content)
-        self.player.play()
 
 
 
