@@ -25,11 +25,11 @@ class Example(QWidget):
         hbox2 = QHBoxLayout()
 
         self.title = QLabel(self)
-        self.title.setText("")
+        self.title.setText("Welcome to Python Music Player")
         self.title.setStyleSheet(titleStyle)
         hbox0.addWidget(self.title, alignment=QtCore.Qt.AlignCenter)
 
-        pixmap = QPixmap("")
+        pixmap = QPixmap("kanye-face.gif")
         cover = QLabel(self)
         cover.setPixmap(pixmap)
         cover.resize(pixmap.width(), pixmap.height())
@@ -42,10 +42,10 @@ class Example(QWidget):
         self.player.positionChanged.connect(self.position_changed)
 
 
-        vbox.addLayout(hbox0)
-        vbox.addLayout(hbox1)
+        vbox.addLayout(hbox0, 2)
+        vbox.addLayout(hbox1, 3)
         vbox.addWidget(self.prgsBar, alignment=QtCore.Qt.AlignCenter)
-        vbox.addLayout(hbox2)
+        vbox.addLayout(hbox2, 5)
 
         sld = QSlider(Qt.Horizontal, self)
         sld.setRange(0, 100)
@@ -64,13 +64,13 @@ class Example(QWidget):
         self.pButton.setCheckable(True)
         self.pButton.clicked.connect(self.pButton_clicked)
 
-        hbox2.addWidget(self.fButton)
+        hbox2.addWidget(self.fButton, 2)
         hbox2.addSpacing(50)
-        hbox2.addWidget(self.pButton)
+        hbox2.addWidget(self.pButton, 6)
         hbox2.addSpacing(50)
-        hbox2.addWidget(sld)
+        hbox2.addWidget(sld, 2)
 
-        
+       
         self.setLayout(vbox)
 
         self.setGeometry(400, 300, 800, 450)
@@ -78,12 +78,12 @@ class Example(QWidget):
         self.show()
 
     def updateLabel(self, value):
-    
+   
         self.player.setVolume(value)
 
     def fButton_clicked(self):
 
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        fname = QFileDialog.getOpenFileName(self, 'Open file',
          'c:\\',"Audio files (*.mp3 *.wav)")
         dlg = QFileDialog()
         dlg.setFileMode(QFileDialog.AnyFile)
@@ -98,12 +98,12 @@ class Example(QWidget):
         self.player.setMedia(content)
 
     def pButton_clicked(self):
-            
+           
         # sets color to red when pressed
         if self.pButton.isChecked():
             self.pButton.setIcon(QIcon('pause.ico'))
             self.player.play()
-        
+       
         # pause button changes color and mutes music
         else:
             self.pButton.setIcon(QIcon('playButton.ico'))
@@ -118,7 +118,7 @@ class Example(QWidget):
 titleStyle = "font-family: gothom, sans-serif;font-size: 20px; color: black"
 
 def main():
-    
+   
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
